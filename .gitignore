@@ -1,0 +1,4 @@
+publish
+src/obj
+src/bin
+debug*.ps1
