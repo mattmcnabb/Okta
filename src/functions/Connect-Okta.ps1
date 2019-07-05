@@ -29,6 +29,9 @@ function Connect-Okta
     }
     catch
     {
-        $PSCmdlet.ThrowTerminatingError($_)
+        throw [System.ArgumentException]::new(
+            'Failed to connect to your Okta org with the parameters provided.',
+            $_.Exception
+        )
     }
 }
