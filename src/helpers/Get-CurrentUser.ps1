@@ -8,6 +8,7 @@ function Get-CurrentUser
         [Okta.Sdk.OktaClient]
         $Client
     )
-
-    [Okta.PS.User]::new([Okta.PS.User]::GetCurrentUser($Client).Result)
+    
+    $Result = Wait-Task -Task ([Okta.PS.User]::GetCurrentUser($Client)) -ErrorAction Stop
+    [Okta.PS.User]::new($Result)       
 }
