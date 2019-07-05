@@ -13,6 +13,7 @@
     )
     CmdletsToExport      = @(
         "Connect-Okta"
+        "Get-OktaApplication"
         "Get-OktaConnection"
         "Get-OktaUser"
     )
