@@ -14,6 +14,16 @@
                 "panel": "new"
             },
             "problemMatcher": "$pester"
+        },
+        {
+            "label": "Test",
+            "command": "Invoke-Psake ${cwd}/psake.ps1 -TaskList Test",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": "$pester"
         }
     ]
 }
