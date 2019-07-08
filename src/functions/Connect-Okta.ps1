@@ -10,15 +10,18 @@ function Connect-Okta
         $OktaDomain,
 
         [Parameter(Mandatory)]
-        [ValidatePattern("^00[a-zA-Z0-9\\-\\_]{40}$")]
+        [ValidatePattern("^00[a-zA-Z0-9\-\\_]{40}$")]
         [string]
         $ApiToken
     )
     
-    $Configuration = [Okta.Sdk.Configuration.OktaClientConfiguration]::new()
-    $Configuration.OktaDomain = $OktaDomain
-    $Configuration.Token = $ApiToken
-    $Client = [Okta.Sdk.OktaClient]::new($Configuration)
+    
+    $Client = [Okta.Sdk.OktaClient]::new(
+        [Okta.Sdk.Configuration.OktaClientConfiguration]@{
+            OktaDomain = $OktaDomain
+            Token      = $ApiToken
+        }
+    )
     
     try
     {
@@ -29,6 +32,9 @@ function Connect-Okta
     }
     catch
     {
-        $PSCmdlet.ThrowTerminatingError($_)
+        throw [System.ArgumentException]::new(
+            'Failed to connect to your Okta org with the parameters provided.',
+            $_.Exception
+        )
     }
 }
