@@ -10,7 +10,7 @@ function Connect-Okta
         $OktaDomain,
 
         [Parameter(Mandatory)]
-        [ValidatePattern("^00[a-zA-Z0-9\\-\\_]{40}$")]
+        [ValidatePattern("^00[a-zA-Z0-9\-\\_]{40}$")]
         [string]
         $ApiToken
     )
