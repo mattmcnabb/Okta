@@ -33,7 +33,7 @@ task Compile -depends Clean -action {
 }
 
 task Test -action {
-    Invoke-Pester @{ Path = $Testspath; Parameters = @{ModulePath = $PublishModulePath}}
+    Invoke-Pester @{ Path = $Testspath; EnableExit = [bool]$env:testExit; Parameters = @{ModulePath = $PublishModulePath; }}
 }
 
 task Clean -action {
