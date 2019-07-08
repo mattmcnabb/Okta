@@ -41,3 +41,7 @@ task Clean -action {
     Remove-Item -Path $ObjPath -Confirm:$false -Recurse -ErrorAction Ignore
     Remove-Item -Path $ObjPath -Confirm:$false -Recurse -ErrorAction Ignore
 }
+
+task BuildTools -action {
+    Install-Module Pester -Force -SkipPublisherCheck
+}

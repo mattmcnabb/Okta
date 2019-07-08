@@ -20,32 +20,41 @@ pool:
 
 steps:
 # Linux
-- bash: |
-    wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    sudo apt-get install apt-transport-https
-    sudo apt-get update
-    sudo apt-get install dotnet-sdk-2.2
-    wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    sudo apt-get update
-    sudo apt-get install -y powershell
-  condition: eq( variables['Agent.OS'], 'Linux' )
-  displayName: Get IP on Linux
+#- bash: |
+#    wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+#    sudo dpkg -i packages-microsoft-prod.deb
+#    sudo apt-get install apt-transport-https
+#    sudo apt-get update
+#    sudo apt-get install dotnet-sdk-2.2
+#  condition: eq( variables['Agent.OS'], 'Linux' )
+#  displayName: Install dotnet sdk Linux
+
+#- pwsh: |
+#    Install-Module Pester -Force -SkipPublisherCheck
+#    Install-Module Psake -Force -SkipPublisherCheck
+#  condition: eq( variables['Agent.OS'], 'Linux')
+#  displayName: Install PS modules Linux
 
 # macOS
-- bash: |
-    brew cask install dotnet-sdk
-    brew cask install powershell
-  condition: eq( variables['Agent.OS'], 'Darwin' )
-  displayName: Get IP on macOS
+#- bash: |
+#    brew cask install dotnet-sdk
+#  condition: eq( variables['Agent.OS'], 'Darwin' )
+#  displayName: Install dotnet sdk MacOS
+
+#- pwsh: |
+#    Install-Module Pester -Force -SkipPublisherCheck
+#    Install-Module Psake -Force -SkipPublisherCheck
+#  condition: eq( variables['Agent.OS'], 'Darwin')
+#  displayName: Install PS modules MacOS
 
 # Windows
-- powershell: |
-    Install-Module Pester -Force -SkipPublisherCheck
-    Install-Module Psake -Force
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: Install Build Tools
+#- pwsh: |
+#    Install-Module Pester -Force -SkipPublisherCheck
+#    Install-Module Psake -Force -SkipPublisherCheck
+#  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+#  displayName: Install PS modules Windows
 
-#- script: |
-#    dotnet build 
+- pwsh: |
+    Install-Module Psake -Force -SkipPublisherCheck
+    Invoke-Psake -Buildfile psake.ps1 -Tasklist BuildTools, Compile, Test
+  displayName: Psake build
