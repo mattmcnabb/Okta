@@ -18,11 +18,13 @@ strategy:
 pool:
   vmImage: $(imageName)
 
-variables:
-    testExit: true
-
 steps:
 - pwsh: |
     Install-Module Psake -Force -SkipPublisherCheck
-    Invoke-Psake -Tasklist BuildTools, Compile, Test
-  displayName: Psake build
+    Invoke-Psake -Tasklist BuildTools, Compile
+  displayName: Build project
+
+- pwsh: |
+    Install-Module Psake -Force -SkipPublisherCheck
+    Invoke-Psake -Tasklist Test
+  displayName: test project

@@ -34,12 +34,15 @@ task Compile -action {
 }
 
 task Test -action {
-    Invoke-Pester @{
-        Path = $Testspath
+    $PesterParams = @{
+        Script = @{
+            Path       = $Testspath
+            Parameters = @{ModulePath = $PublishModulePath }
+        }
         IncludeVSCodeMarker = $true
-        EnableExit = $TestExit
-        Parameters = @{ModulePath = $PublishModulePath}
+        EnableExit          = $TestExit
     }
+    Invoke-Pester @PesterParams
 }
 
 task Clean -action {
