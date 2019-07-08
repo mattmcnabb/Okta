@@ -1,4 +1,5 @@
 properties {
+    $IsBuild = [Bool]$env:TF_BUILD
     $ModuleName = "Okta"
     $PublishPath = Join-Path $PSScriptRoot "publish"
     $PublishModulePath = Join-Path $PublishPath $ModuleName
@@ -11,7 +12,6 @@ properties {
     $ObjPath = Join-Path $SrcPath "obj"
     $BinPath = Join-Path $SrcPath "bin"
     $TestsPath = Join-Path $PSScriptRoot "tests"
-    $TestExit = [Bool]$env:TF_BUILD
     $FunctionsPath = Join-Path $SrcPath "functions"
     $HelpersPath = Join-Path $SrcPath "helpers"
 }
@@ -39,8 +39,8 @@ task Test -action {
             Path       = $Testspath
             Parameters = @{ModulePath = $PublishModulePath }
         }
-        IncludeVSCodeMarker = $true
-        EnableExit          = $TestExit
+        PesterOption = @{IncludeVSCodeMarker = $true}
+        EnableExit   = $TestExit
     }
     Invoke-Pester @PesterParams
 }
