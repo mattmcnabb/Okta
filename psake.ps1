@@ -1,5 +1,5 @@
 properties {
-    $ModuleName = Split-Path $PSScriptRoot -Leaf
+    $ModuleName = "Okta"
     $PublishPath = Join-Path $PSScriptRoot "publish"
     $PublishModulePath = Join-Path $PublishPath $ModuleName
     $PublishPsm1Path = Join-Path $PublishModulePath "$ModuleName.psm1"
