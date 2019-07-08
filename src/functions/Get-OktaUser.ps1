@@ -19,28 +19,29 @@ function Get-OktaUser
     
     try
     {
-        switch ($PSCmdlet.ParameterSetName)
+        $Task = switch ($PSCmdlet.ParameterSetName)
         {
             "Identity"
             {
-                [Okta.PS.User]::new([Okta.PS.User]::GetUser($Script:Moduleclient, $Identity).Result)
+                [Okta.PS.User]::GetUser($Script:Moduleclient, $Identity)
             }
 
             "Filter"
             {
-                foreach ($Item in [Okta.PS.User]::FilterUsers($Script:Moduleclient, $Filter).Result)
-                {
-                    [Okta.PS.User]::new($Item)
-                }
+                [Okta.PS.User]::FilterUsers($Script:Moduleclient, $Filter)
             }
 
             "All"
             {
-                foreach ($Item in [Okta.PS.User]::GetAllUsers($Script:Moduleclient).Result)
-                {
-                    [Okta.PS.User]::new($Item)
-                }
+                [Okta.PS.User]::GetAllUsers($Script:Moduleclient)
             }
+        }
+
+        $Result = Wait-Task -Task $Task
+
+        foreach ($Item in $Result)
+        {
+            [Okta.PS.User]::new($Item)
         }
     }
     catch
