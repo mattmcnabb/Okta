@@ -25,6 +25,6 @@ steps:
   displayName: Build project
 
 - pwsh: |
-    Install-Module Psake -Force -SkipPublisherCheck
     Invoke-Psake -Tasklist Test
+    exit ([int](-not $psake.build_success))
   displayName: test project

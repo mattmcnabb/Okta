@@ -40,9 +40,8 @@ task Test -action {
             Parameters = @{ModulePath = $PublishModulePath }
         }
         PesterOption = @{IncludeVSCodeMarker = $true}
-        EnableExit   = $TestExit
+        EnableExit   = $IsBuild
     }
-    "TestExit is: [$TestExit]"
     Invoke-Pester @PesterParams
 }
 
