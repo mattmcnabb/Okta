@@ -21,10 +21,10 @@ pool:
 steps:
 - pwsh: |
     Install-Module Psake -Force -SkipPublisherCheck
-    Invoke-Psake -Tasklist BuildTools, Compile
+    Invoke-Psake -Tasklist BuildTools, Compile -nologo
   displayName: Build project
 
 - pwsh: |
-    Invoke-Psake -Tasklist Test
+    Invoke-Psake -Tasklist Test -nologo
     exit ([int](-not $psake.build_success))
   displayName: test project
