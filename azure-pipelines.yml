@@ -29,6 +29,7 @@ pool:
 #  condition: eq( variables['Agent.OS'], 'Darwin' )
 #  displayName: Get IP on macOS
 # Windows
+steps:
 - powershell: |
     Install-Module Pester -Force
     Install-Modules Psake -Force
