@@ -42,6 +42,7 @@ task Test -action {
         PesterOption = @{IncludeVSCodeMarker = $true}
         EnableExit   = $TestExit
     }
+    "TestExit is: [$TestExit]"
     Invoke-Pester @PesterParams
 }
 
