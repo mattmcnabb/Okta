@@ -15,7 +15,22 @@ strategy:
     windows:
       imageName: 'windows-2019'
 
-steps:
-- script: 'install-module Pester -force'
-  displayName: 'install Pester'
+pool:
+  vmImage: $(imageName)
 
+# Linux
+#- bash: |
+#    
+#  condition: eq( variables['Agent.OS'], 'Linux' )
+#  displayName: Get IP on Linux
+# macOS
+#- bash: |
+#    
+#  condition: eq( variables['Agent.OS'], 'Darwin' )
+#  displayName: Get IP on macOS
+# Windows
+- powershell: |
+    Install-Module Pester -Force
+    Install-Modules Psake -Force
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: Install Modules
