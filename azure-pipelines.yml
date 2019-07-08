@@ -26,10 +26,3 @@ steps:
     Install-Module Psake -Force -SkipPublisherCheck
     Invoke-Psake -Tasklist BuildTools, Compile
   displayName: Psake build
-
-- task: Pester@8
-  inputs:
-    scriptFolder: '@{Path=$(System.DefaultWorkingDirectory)\tests; EnableExit = $true; Parameters = @{ModulePath = $(System.DefaultWorkingDirectory)\publish\Okta}}'
-    resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
-    CodeCoverageOutputFile: '$(System.DefaultWorkingDirectory)\Code-Coverage.XML'
-    run32Bit: False

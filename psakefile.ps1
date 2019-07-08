@@ -11,11 +11,12 @@ properties {
     $ObjPath = Join-Path $SrcPath "obj"
     $BinPath = Join-Path $SrcPath "bin"
     $TestsPath = Join-Path $PSScriptRoot "tests"
+    $TestExit = [Bool]$env:TF_BUILD
     $FunctionsPath = Join-Path $SrcPath "functions"
     $HelpersPath = Join-Path $SrcPath "helpers"
 }
 
-task Compile -depends Clean -action {
+task Compile -action {
     # build and publish dotnet project
     New-Item -Path $PublishModulePath -ItemType Directory -Force
     dotnet build $CSProjPath
@@ -36,7 +37,7 @@ task Test -action {
     Invoke-Pester @{
         Path = $Testspath
         IncludeVSCodeMarker = $true
-        EnableExit = [bool]$env:testExit
+        EnableExit = $TestExit
         Parameters = @{ModulePath = $PublishModulePath}
     }
 }
