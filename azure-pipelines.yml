@@ -31,7 +31,7 @@ pool:
 # Windows
 steps:
 - powershell: |
-    Install-Module Pester -Force
-    Install-Modules Psake -Force
+    Install-Module Pester -Force -SkipPublisherCheck
+    Install-Module Psake -Force
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Install Modules
