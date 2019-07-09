@@ -56,6 +56,7 @@ jobs:
     inputs:
       codeCoverageTool: 'JaCoCo'
       summaryFileLocation: 'CodeCoverage.xml'
+      pathToSources: '$(System.DefaultWorkingDirectory)\src'
 
   - task: PublishBuildArtifacts@1
     inputs:
