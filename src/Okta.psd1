@@ -1,6 +1,6 @@
 @{
     RootModule           = "Okta.psm1"
-    RequiredAssemblies   = "Okta.PS.dll", "Okta.Sdk.dll"
+    RequiredAssemblies   = "bin/Okta.PS.dll", "bin/Okta.Sdk.dll"
     ModuleVersion        = "0.1.0"
     GUID                 = "0c4541cc-bfa1-4e7f-abd6-0372a92365db"
     Author               = "Matt McNabb"
