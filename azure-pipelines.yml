@@ -45,7 +45,7 @@ jobs:
   - pwsh: |
       Invoke-Psake -Tasklist Test -nologo
       exit ([int](-not $psake.build_success))
-  displayName: test project
+    displayName: test project
 
   - task: PublishTestResults@2
     inputs:
