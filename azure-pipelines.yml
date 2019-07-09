@@ -18,13 +18,26 @@ strategy:
 pool:
   vmImage: $(imageName)
 
-steps:
-- pwsh: |
-    Install-Module Psake -Force -SkipPublisherCheck
-    Invoke-Psake -Tasklist BuildTools, Compile -nologo
-  displayName: Build project
+jobs:
+- job: 'Build and test'
+  steps:
+  - pwsh: |
+      Install-Module Psake -Force -SkipPublisherCheck
+      Invoke-Psake -Tasklist BuildTools, Compile -nologo
+    displayName: Build project
 
-- pwsh: |
-    Invoke-Psake -Tasklist Test -nologo
-    exit ([int](-not $psake.build_success))
-  displayName: test project
+  - pwsh: |
+      Invoke-Psake -Tasklist Test -nologo
+      exit ([int](-not $psake.build_success))
+    displayName: test project
+
+- job: 'Publish artifact'
+  steps:
+  - task: PublishBuildArtifacts@1
+    enabled: false
+    dependsOn: 'Build and test'
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
+    inputs:
+      PathtoPublish: '$(System.DefaultWorkingDirectory)\publish\Okta'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
