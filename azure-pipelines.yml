@@ -48,14 +48,14 @@ jobs:
   displayName: test project
 
   - task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'NUnit'
-    testResultsFiles: 'TestResults.xml'
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: 'TestResults.xml'
 
   - task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)\CodeCoverage.xml'
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)\CodeCoverage.xml'
 
   - task: PublishBuildArtifacts@1
     inputs:
