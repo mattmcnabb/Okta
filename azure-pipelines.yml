@@ -31,7 +31,7 @@ jobs:
       exit ([int](-not $psake.build_success))
     displayName: test project
 
-job: artifact
+- job: artifact
   pool:
     vmImage: 'windows-2019'
   steps:
