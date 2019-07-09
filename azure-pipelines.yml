@@ -55,7 +55,7 @@ jobs:
   - task: PublishCodeCoverageResults@1
     inputs:
       codeCoverageTool: 'JaCoCo'
-      summaryFileLocation: '$(System.DefaultWorkingDirectory)\CodeCoverage.xml'
+      summaryFileLocation: 'CodeCoverage.xml'
 
   - task: PublishBuildArtifacts@1
     inputs:
