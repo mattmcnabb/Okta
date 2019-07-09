@@ -13,6 +13,8 @@ properties {
     $ObjPath = Join-Path $SrcPath "obj"
     $BinPath = Join-Path $SrcPath "bin"
     $TestsPath = Join-Path $PSScriptRoot "tests"
+    $TestResultsPath = Join-Path $PSScriptRoot "TestResults.xml"
+    $CodeCoveragePath = Join-Path $PSScriptRoot "CodeCoverage.xml"
     $FunctionsPath = Join-Path $SrcPath "functions"
     $HelpersPath = Join-Path $SrcPath "helpers"
 }
@@ -42,6 +44,15 @@ task Test -action {
         PesterOption = @{IncludeVSCodeMarker = $true}
         EnableExit   = $IsBuild
     }
+
+    if ($IsBuild)
+    {
+        $PesterParams["CodeCoverage"] = $true
+        $PesterParams["CodeCoverageOutputFile"] = $CodeCoveragePath
+        $PesterParams["OutputFile"] = $TestResultsPath
+        $PesterParams["OutputFileFormat"] = "NUnitXML"
+    }
+
     Invoke-Pester @PesterParams
 }
 

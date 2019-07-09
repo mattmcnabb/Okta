@@ -14,8 +14,6 @@ jobs:
         imageName: 'ubuntu-latest'
       mac:
         imageName: 'macos-10.14'
-      windows:
-        imageName: 'windows-2019'
 
   pool:
     vmImage: $(imageName)
@@ -43,6 +41,21 @@ jobs:
       Install-Module Psake -Force -SkipPublisherCheck
       Invoke-Psake -Tasklist BuildTools, Compile -nologo
     displayName: Build project
+
+  - pwsh: |
+    Invoke-Psake -Tasklist Test -nologo
+    exit ([int](-not $psake.build_success))
+  displayName: test project
+
+  - task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: 'TestResults.xml'
+
+  - task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)\CodeCoverage.xml'
 
   - task: PublishBuildArtifacts@1
     inputs:
