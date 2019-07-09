@@ -1,0 +1,9 @@
+{
+    "name": "Okta PowerShell Module",
+    "description": "A PowerShell module for performing administrator and developer tasks in your Okta org. Compatible with Windows PowerShell 5.1, and PowerShell Core on Windows, Linux, and Mac.",
+    "url": "https://github.com/mattmcnabb/okta",
+    "logo": "https://developer.okta.com/logo.png",
+    "categories": [
+        "user-management"
+    ]
+}
