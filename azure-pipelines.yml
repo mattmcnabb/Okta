@@ -32,13 +32,15 @@ jobs:
     displayName: test project
 
 - job: artifact
+  dependsOn: xplat
+  condition: succeeded()
+  
   pool:
     vmImage: 'windows-2019'
+  
   steps:
   - task: PublishBuildArtifacts@1
     enabled: false
-    dependsOn: xplat
-    condition: succeeded()
     inputs:
       PathtoPublish: '$(System.DefaultWorkingDirectory)\publish\Okta'
       ArtifactName: 'drop'
