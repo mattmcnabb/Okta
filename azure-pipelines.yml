@@ -40,7 +40,6 @@ jobs:
   
   steps:
   - task: PublishBuildArtifacts@1
-    enabled: false
     inputs:
       PathtoPublish: '$(System.DefaultWorkingDirectory)\publish\Okta'
       ArtifactName: 'drop'
