@@ -47,5 +47,5 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: '$(System.DefaultWorkingDirectory)\publish\Okta'
-      ArtifactName: 'drop'
+      ArtifactName: 'Okta'
       publishLocation: 'Container'
