@@ -6,20 +6,20 @@
 trigger:
 - azure-pipelines
 
-strategy:
-  matrix:
-    linux:
-      imageName: 'ubuntu-latest'
-    mac:
-      imageName: 'macos-10.14'
-    windows:
-      imageName: 'windows-2019'
-
-pool:
-  vmImage: $(imageName)
-
 jobs:
-- job: 'Build and test'
+- job: xplat
+  strategy:
+    matrix:
+      linux:
+        imageName: 'ubuntu-latest'
+      mac:
+        imageName: 'macos-10.14'
+      windows:
+        imageName: 'windows-2019'
+
+  pool:
+    vmImage: $(imageName)
+
   steps:
   - pwsh: |
       Install-Module Psake -Force -SkipPublisherCheck
@@ -31,12 +31,14 @@ jobs:
       exit ([int](-not $psake.build_success))
     displayName: test project
 
-- job: 'Publish artifact'
+job: artifact
+  pool:
+    vmImage: 'windows-2019'
   steps:
   - task: PublishBuildArtifacts@1
     enabled: false
-    dependsOn: 'Build and test'
-    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
+    dependsOn: xplat
+    condition: succeeded()
     inputs:
       PathtoPublish: '$(System.DefaultWorkingDirectory)\publish\Okta'
       ArtifactName: 'drop'
