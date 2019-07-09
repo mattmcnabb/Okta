@@ -50,7 +50,7 @@ task Test -action {
         $PesterParams["CodeCoverage"] = $true
         $PesterParams["CodeCoverageOutputFile"] = $CodeCoveragePath
         $PesterParams["OutputFile"] = $TestResultsPath
-        $PesterParams["OutputFileFormat"] = "NUnitXML"
+        $PesterParams["OutputFormat"] = "NUnitXML"
     }
 
     Invoke-Pester @PesterParams

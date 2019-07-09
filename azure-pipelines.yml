@@ -29,7 +29,7 @@ jobs:
       exit ([int](-not $psake.build_success))
     displayName: test project
 
-- job: artifact
+- job: windows
   dependsOn: xplat
   condition: succeeded()
   
