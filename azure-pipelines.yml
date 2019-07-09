@@ -40,9 +40,9 @@ jobs:
   
   steps:
   - pwsh: |
-    Install-Module Psake -Force -SkipPublisherCheck
-    Invoke-Psake -Tasklist BuildTools, Compile -nologo
-  displayName: Build project
+      Install-Module Psake -Force -SkipPublisherCheck
+      Invoke-Psake -Tasklist BuildTools, Compile -nologo
+    displayName: Build project
 
   - task: PublishBuildArtifacts@1
     inputs:
