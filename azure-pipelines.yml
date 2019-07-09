@@ -1,0 +1,65 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+jobs:
+- job: xplat
+  strategy:
+    matrix:
+      linux:
+        imageName: 'ubuntu-latest'
+      mac:
+        imageName: 'macos-10.14'
+
+  pool:
+    vmImage: $(imageName)
+
+  steps:
+  - pwsh: |
+      Install-Module Psake -Force -SkipPublisherCheck
+      Invoke-Psake -Tasklist BuildTools, Compile -nologo
+    displayName: Build project
+
+  - pwsh: |
+      Invoke-Psake -Tasklist Test -nologo
+      exit ([int](-not $psake.build_success))
+    displayName: test project
+
+- job: windows
+  dependsOn: xplat
+  condition: succeeded()
+  
+  pool:
+    vmImage: 'windows-2019'
+  
+  steps:
+  - pwsh: |
+      Install-Module Psake -Force -SkipPublisherCheck
+      Invoke-Psake -Tasklist BuildTools, Compile -nologo
+    displayName: Build project
+
+  - pwsh: |
+      Invoke-Psake -Tasklist Test -nologo
+      exit ([int](-not $psake.build_success))
+    displayName: test project
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: 'TestResults.xml'
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: 'CodeCoverage.xml'
+      pathToSources: '$(System.DefaultWorkingDirectory)\src'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(System.DefaultWorkingDirectory)\publish\Okta'
+      ArtifactName: 'Okta'
+      publishLocation: 'Container'

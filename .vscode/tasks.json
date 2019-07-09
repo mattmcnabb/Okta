@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Compile",
-            "command": "Invoke-Psake ${cwd}/psake.ps1 -TaskList Compile",
+            "command": "Invoke-Psake ${cwd}/psakefile.ps1 -TaskList Clean, Compile",
             "type": "shell",
             "group": {
                 "kind": "build",
@@ -17,7 +17,7 @@
         },
         {
             "label": "Test",
-            "command": "Invoke-Psake ${cwd}/psake.ps1 -TaskList Test",
+            "command": "Invoke-Psake ${cwd}/psakefile.ps1 -TaskList Test",
             "type": "shell",
             "presentation": {
                 "reveal": "always",
