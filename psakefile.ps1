@@ -47,7 +47,7 @@ task Test -action {
 
     if ($IsBuild)
     {
-        $PesterParams["CodeCoverage"] = $true
+        $PesterParams["CodeCoverage"] = $PublishPsm1Path
         $PesterParams["CodeCoverageOutputFile"] = $CodeCoveragePath
         $PesterParams["OutputFile"] = $TestResultsPath
         $PesterParams["OutputFormat"] = "NUnitXML"
