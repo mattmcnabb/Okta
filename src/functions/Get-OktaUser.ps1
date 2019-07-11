@@ -4,7 +4,7 @@ function Get-OktaUser
     [OutputType([Okta.PS.User])]
     param
     (
-        [Parameter(Mandatory, ParameterSetName = "Identity")]
+        [Parameter(Mandatory, ParameterSetName = "Identity", Position = 0)]
         [string]
         $Identity,
 
