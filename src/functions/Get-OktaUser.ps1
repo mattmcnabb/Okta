@@ -19,21 +19,24 @@ function Get-OktaUser
     
     try
     {
+        Test-OktaConnection
+        $Type = $PSCmdlet.MyInvocation.MyCommand.OutputType.Type
+        
         $Task = switch ($PSCmdlet.ParameterSetName)
         {
             "Identity"
             {
-                [Okta.PS.User]::GetUser($Script:Moduleclient, $Identity)
+                Invoke-Method -Type $Type -MethodName "GetUser" -Arguments @($Script:ModuleClient, $Identity)
             }
 
             "Filter"
             {
-                [Okta.PS.User]::FilterUsers($Script:Moduleclient, $Filter)
+                Invoke-Method -Type $Type -MethodName "FilterUsers" -Arguments @($Script:ModuleClient, $Filter)
             }
 
             "All"
             {
-                [Okta.PS.User]::GetAllUsers($Script:Moduleclient)
+                Invoke-Method -Type $Type -MethodName "GetAllUsers" -Arguments @($Script:ModuleClient)
             }
         }
 
@@ -41,7 +44,7 @@ function Get-OktaUser
 
         foreach ($Item in $Result)
         {
-            [Okta.PS.User]::new($Item)
+            $Type::new($Item)
         }
     }
     catch
