@@ -12,13 +12,6 @@ Import-Module $ModulePath -Force
 
         # tests where an API connection is not needed
         Context "No Connection" {
-            #Mock Wait-Task { New-MockObject -Type Okta.Sdk.User } @Splat_ModuleName
-            #Mock Invoke-Method { New-MockObject System.Threading.Tasks.Task } @Splat_ModuleName
-            
-            It "-Identity is positional" {
-                { Get-OktaUser "nuffin" } | Should Not Throw "A positional parameter cannot be found that accepts argument"
-            }
-
             It "enforces exclusive parameters" {
                 { Get-OktaUser -Identity "nuffin" -Filter 'status eq "STAGED"' } | Should Throw "Parameter set cannot be resolved"
             }
@@ -31,11 +24,13 @@ Import-Module $ModulePath -Force
         # tests that require a connection object to succeed
         Context "Connection" {
             Mock Test-OktaConnection { } @Splat_ModuleName
-            #Mock Wait-Task { New-MockObject -Type Okta.Sdk.User } @Splat_ModuleName
-            #Mock Invoke-Method { New-MockObject System.Threading.Tasks.Task } @Splat_ModuleName
             
             It "outputs a User object" {
                 Get-OktaUser -Identity "nuffin" | Should BeOfType [Okta.PS.User]
+            }
+
+            It "-Identity is positional" {
+                { Get-OktaUser "nuffin" } | Should Not Throw
             }
         }
 
