@@ -31,7 +31,6 @@ jobs:
 
 - job: windows
   dependsOn: xplat
-  condition: succeeded()
   
   pool:
     vmImage: 'windows-2019'
