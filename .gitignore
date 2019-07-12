@@ -1,4 +1,5 @@
-publish
-src/obj
-src/bin
+Output
+Okta.PS/obj
+Okta.PS/bin
 debug*.ps1
+Source/Bin

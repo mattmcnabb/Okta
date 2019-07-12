@@ -8,15 +8,8 @@
     Description          = "The unofficial Okta administrator module. Leverages the Okta .NET SDK to automate administrator and developer tasks in your Okta org. Compatible with Windows PowerShell 5.1, and PowerShell Core on Windows, Linux, and Mac."
     CompatiblePSEditions = "Desktop", "Core"
     PowerShellVersion    = "5.1"
-    FormatsToProcess     = @(
-
-    )
-    CmdletsToExport      = @(
-        "Connect-Okta"
-        "Get-OktaApplication"
-        "Get-OktaConnection"
-        "Get-OktaUser"
-    )
+    FormatsToProcess     = @()
+    FunctionsToExport    = @()
     PrivateData          = @{
         PSData = @{
             Tags       = "Okta", "REST", "IAM", "Identity", "PSEdition_Core", "PSEdition_Desktop", "Windows", "Linux", "macOS"
