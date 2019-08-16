@@ -27,6 +27,11 @@ Get-OktaGroup -Filter <String> [<CommonParameters>]
 Get-OktaGroup -User <User> [<CommonParameters>]
 ```
 
+### App
+```
+Get-OktaGroup -App <Application> [<CommonParameters>]
+```
+
 ### All
 ```
 Get-OktaGroup [-All] [<CommonParameters>]
@@ -58,12 +63,19 @@ PS C:\> Get-OktaGroup -Filter 'type eq "OKTA_GROUP"'
 
 Get any groups of type OKTA_GROUP by specifying a filter string.
 
-### Example 3
+### Example 4
 ```powershell
 PS C:\> Get-OktaUser -Identity "matt" | Get-OktaGroup
 ```
 
 Get groups with user matt as a member.
+
+### Example 5
+```powershell
+PS C:\> Get-OktaApp -Identity "00hh2hjrlgEpE5JNj8h9" | Get-OktaGroup
+```
+
+Get groups assigned to a particular application.
 
 ## PARAMETERS
 
@@ -118,6 +130,21 @@ Specifies a user to return group membership for.
 ```yaml
 Type: User
 Parameter Sets: User
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -App
+Specifies an Okta app, and will return all groups assigned to that app.
+
+```yaml
+Type: Application
+Parameter Sets: App
 Aliases:
 
 Required: True
