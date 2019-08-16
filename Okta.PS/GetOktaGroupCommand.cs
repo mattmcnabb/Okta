@@ -18,6 +18,9 @@ namespace Okta.PS
         [Parameter(Mandatory = true, ParameterSetName = "User", ValueFromPipeline = true)]
         public User User { get; set; }
 
+        [Parameter(Mandatory = true, ParameterSetName = "App", ValueFromPipeline = true)]
+        public Application App { get; set; }
+
         [Parameter(Mandatory = true, ParameterSetName = "All")]
         public SwitchParameter All { get; set; }
 
@@ -45,6 +48,13 @@ namespace Okta.PS
                         User.Groups.ToList().Result,
                         true
                     );
+                    break;
+
+                case "App":
+                    var allGroups = Config.Client.Groups.ListGroups().ToList().Result;
+                    var assignments = App.ListGroupAssignments().ToList().Result.Select(a => a.Id);
+                    
+                    WriteObject(allGroups.Where(g => assignments.Contains(g.Id)), true);
                     break;
 
                 case "All":
